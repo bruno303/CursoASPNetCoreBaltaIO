@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProductCatalog.Data;
 
 namespace ProductCatalog
 {
@@ -9,7 +10,11 @@ namespace ProductCatalog
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(opts => 
+            {
+                opts.EnableEndpointRouting = false;
+            });
+            services.AddScoped<StoreDataContext>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
