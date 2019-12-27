@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using CursoASPNetCoreBaltaIO.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using ProductCatalog.Models;
 
 namespace CursoASPNetCoreBaltaIO.Controllers
