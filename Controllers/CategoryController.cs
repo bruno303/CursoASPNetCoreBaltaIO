@@ -36,6 +36,7 @@ namespace CursoASPNetCoreBaltaIO.Controllers
 
         [Route("v1/categories/{id}/products")]
         [HttpGet]
+        [ResponseCache(Duration = 15, Location = ResponseCacheLocation.Client)]
         public async Task<List<Product>> GetProducts(int id)
         {
             return await _repositoryProducts.GetByCategoryId(id);
