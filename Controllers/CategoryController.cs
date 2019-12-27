@@ -1,55 +1,51 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CursoASPNetCoreBaltaIO.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProductCatalog.Data;
 using ProductCatalog.Models;
 
 namespace CursoASPNetCoreBaltaIO.Controllers
 {
     public class CategoryController
     {
-        private readonly StoreDataContext _context;
+        private readonly CategoryRepository _repositoryCategories;
+        private readonly ProductRepository _repositoryProducts;
 
-        public CategoryController(StoreDataContext context)
+        public CategoryController(CategoryRepository repository,
+            ProductRepository repositoryProducts)
         {
-            this._context = context;
+            this._repositoryCategories = repository;
+            this._repositoryProducts = repositoryProducts;
         }
 
         [Route("v1/categories")]
         [HttpGet]
         public async Task<IEnumerable<Category>> Get()
         {
-            return await _context.Categories.AsNoTracking().ToListAsync();
+            return await _repositoryCategories.Get();
         }
 
         [Route("v1/categories/{id}")]
         [HttpGet]
         public async Task<Category> Get(int id)
         {
-            return await _context.Categories
-                .AsNoTracking()
-                .Where(c => c.Id == id)
-                .FirstOrDefaultAsync();
+            return await _repositoryCategories.Get(id);
         }
 
         [Route("v1/categories/{id}/products")]
         [HttpGet]
         public async Task<List<Product>> GetProducts(int id)
         {
-            return await _context.Prodocuts
-                .AsNoTracking()
-                .Where(p => p.CategoryId == id)
-                .ToListAsync();
+            return await _repositoryProducts.GetByCategoryId(id);
         }
 
         [Route("v1/categories")]
         [HttpPost]
         public async Task<Category> Post([FromBody] Category category)
         {
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
+            await _repositoryCategories.Save(category);
 
             return category;
         }
@@ -58,8 +54,7 @@ namespace CursoASPNetCoreBaltaIO.Controllers
         [HttpPut]
         public async Task<Category> Put([FromBody] Category category)
         {
-            _context.Entry<Category>(category).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            await _repositoryCategories.Update(category);
 
             return category;
         }
@@ -68,8 +63,7 @@ namespace CursoASPNetCoreBaltaIO.Controllers
         [HttpDelete]
         public async Task<Category> Delete([FromBody] Category category)
         {
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
+            await _repositoryCategories.Delete(category);
 
             return category;
         }

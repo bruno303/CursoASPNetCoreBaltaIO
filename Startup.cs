@@ -1,3 +1,4 @@
+using CursoASPNetCoreBaltaIO.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,8 @@ namespace ProductCatalog
                 opts.EnableEndpointRouting = false;
             });
             services.AddScoped<StoreDataContext>();
+            services.AddTransient<ProductRepository>();
+            services.AddTransient<CategoryRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
