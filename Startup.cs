@@ -15,6 +15,9 @@ namespace ProductCatalog
             {
                 opts.EnableEndpointRouting = false;
             });
+
+            services.AddResponseCompression(cfg => cfg.EnableForHttps = true);
+
             services.AddScoped<StoreDataContext>();
             services.AddTransient<ProductRepository>();
             services.AddTransient<CategoryRepository>();
@@ -28,6 +31,7 @@ namespace ProductCatalog
             }
 
             app.UseMvc();
+            app.UseResponseCompression();
         }
     }
 }
