@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace CursoASPNetCoreBaltaIO.Repositories.Interfaces
 {
-    public interface IRepository<TType, TKey, TViewModel> where TType : class
+    public interface IRepository<TType, TKey> where TType : class
     {
-        Task<IEnumerable<TViewModel>> Get();
+        Task<IEnumerable<TType>> Get();
 
         Task<TType> Get(TKey id);
 

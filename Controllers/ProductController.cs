@@ -18,22 +18,19 @@ namespace CursoASPNetCoreBaltaIO.Controllers
             this._repository = repository;
         }
 
-        [Route("v1/products")]
-        [HttpGet]
+        [HttpGet("v1/products")]
         public async Task<IEnumerable<ListProductViewModel>> Get()
         {
-            return await _repository.Get();
+            return await _repository.GetAllAsListProductViewModel();
         }
 
-        [Route("v1/products/{id}")]
-        [HttpGet]
+        [HttpGet("v1/products/{id}")]
         public async Task<Product> Get(int id)
         {
             return await _repository.Get(id);
         }
 
-        [Route("v1/products")]
-        [HttpPost]
+        [HttpPost("v1/products")]
         public async Task<ResultViewModel> Post([FromBody]EditorProductViewModel model)
         {
             model.Validate();
@@ -67,8 +64,7 @@ namespace CursoASPNetCoreBaltaIO.Controllers
             };
         }
 
-        [Route("v2/products")]
-        [HttpPost]
+        [HttpPost("v2/products")]
         public async Task<ResultViewModel> Post([FromBody]Product product)
         {
             await _repository.Save(product);
@@ -81,8 +77,7 @@ namespace CursoASPNetCoreBaltaIO.Controllers
             };
         }
 
-        [Route("v1/products")]
-        [HttpPut]
+        [HttpPut("v1/products")]
         public async Task<ResultViewModel> Put([FromBody]EditorProductViewModel model)
         {
             model.Validate();

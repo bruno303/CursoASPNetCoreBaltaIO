@@ -3,7 +3,7 @@ using ProductCatalog.Models;
 
 namespace CursoASPNetCoreBaltaIO.Repositories
 {
-    public class CategoryRepository : Abstracts.AbstractRepositoryNoViewModel<Category, int>
+    public class CategoryRepository : Abstracts.AbstractRepositoryBase<Category, int>
     {
         private readonly StoreDataContext _context;
 

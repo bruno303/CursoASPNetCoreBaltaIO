@@ -6,10 +6,9 @@ using ProductCatalog.Data;
 
 namespace CursoASPNetCoreBaltaIO.Repositories.Abstracts
 {
-    public abstract class AbstractRepositoryBase<TType, TKey, TViewModel> :
-        IRepository<TType, TKey, TViewModel>
+    public abstract class AbstractRepositoryBase<TType, TKey> :
+        IRepository<TType, TKey>
         where TType : class
-        where TViewModel : class
     {
         private readonly StoreDataContext _context;
 
@@ -18,7 +17,10 @@ namespace CursoASPNetCoreBaltaIO.Repositories.Abstracts
             this._context = context;
         }
 
-        public abstract Task<IEnumerable<TViewModel>> Get();
+        public virtual async Task<IEnumerable<TType>> Get()
+        {
+            return await _context.Set<TType>().AsNoTracking().ToListAsync();
+        }
 
         public virtual async Task<TType> Get(TKey id)
         {

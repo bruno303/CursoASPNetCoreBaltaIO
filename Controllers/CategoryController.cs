@@ -18,30 +18,26 @@ namespace CursoASPNetCoreBaltaIO.Controllers
             this._repositoryProducts = repositoryProducts;
         }
 
-        [Route("v1/categories")]
-        [HttpGet]
+        [HttpGet("v1/categories")]
         public async Task<IEnumerable<Category>> Get()
         {
             return await _repositoryCategories.Get();
         }
 
-        [Route("v1/categories/{id}")]
-        [HttpGet]
+        [HttpGet("v1/categories/{id}")]
         public async Task<Category> Get(int id)
         {
             return await _repositoryCategories.Get(id);
         }
 
-        [Route("v1/categories/{id}/products")]
-        [HttpGet]
+        [HttpGet("v1/categories/{id}/products")]
         [ResponseCache(Duration = 15, Location = ResponseCacheLocation.Client)]
         public async Task<List<Product>> GetProducts(int id)
         {
             return await _repositoryProducts.GetByCategoryId(id);
         }
 
-        [Route("v1/categories")]
-        [HttpPost]
+        [HttpPost("v1/categories")]
         public async Task<Category> Post([FromBody] Category category)
         {
             await _repositoryCategories.Save(category);
@@ -49,8 +45,7 @@ namespace CursoASPNetCoreBaltaIO.Controllers
             return category;
         }
 
-        [Route("v1/categories")]
-        [HttpPut]
+        [HttpPut("v1/categories")]
         public async Task<Category> Put([FromBody] Category category)
         {
             await _repositoryCategories.Update(category);
@@ -58,8 +53,7 @@ namespace CursoASPNetCoreBaltaIO.Controllers
             return category;
         }
 
-        [Route("v1/categories")]
-        [HttpDelete]
+        [HttpDelete("v1/categories")]
         public async Task<Category> Delete([FromBody] Category category)
         {
             await _repositoryCategories.Delete(category);

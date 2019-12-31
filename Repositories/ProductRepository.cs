@@ -8,7 +8,7 @@ using ProductCatalog.Models;
 
 namespace CursoASPNetCoreBaltaIO.Repositories
 {
-    public class ProductRepository : Abstracts.AbstractRepositoryWithViewModel<Product, int, ListProductViewModel>
+    public class ProductRepository : Abstracts.AbstractRepositoryBase<Product, int>
     {
         private readonly StoreDataContext _context;
 
@@ -25,20 +25,19 @@ namespace CursoASPNetCoreBaltaIO.Repositories
                 .ToListAsync();
         }
 
-        public override ListProductViewModel ConvertTypeToViewModel(Product origin)
+        public async Task<IEnumerable<ListProductViewModel>> GetAllAsListProductViewModel()
         {
-            if (origin == null) {
-                return new ListProductViewModel();
-            }
-
-            return new ListProductViewModel()
-            {
-                Id = origin.Id,
-                Title = origin.Title,
-                Price = origin.Price,
-                Category = origin.Category.Title,
-                CategoryId = origin.CategoryId
-            };
+            return await _context.Products
+                .Select(x => new ListProductViewModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Price = x.Price,
+                    Category = x.Category.Title,
+                    CategoryId = x.CategoryId
+                })
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }
